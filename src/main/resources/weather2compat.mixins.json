@@ -1,0 +1,12 @@
+{
+    "required": true,
+    "minVersion": "0.8",
+    "package": "net.obf.weather2compat.mixin",
+    "compatibilityLevel": "JAVA_21",
+    "mixins": [
+        "Weather2CompatMixin"
+    ],
+    "injectors": {
+        "defaultRequire": 1
+    }
+}
