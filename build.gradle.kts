@@ -48,6 +48,8 @@ neoForge {
             sourceSet(sourceSets.main.get())
         }
     }
+
+    parchment.minecraftVersion.set(minecraftVersion)
 }
 
 sourceSets {

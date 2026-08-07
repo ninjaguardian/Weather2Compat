@@ -17,7 +17,7 @@ public class Weather2CompatMixin {
                     target = "Lnet/minecraft/world/level/Level;isRaining()Z"
             )
     )
-    private boolean isRaining(Level instance, @Local(argsOnly = true) BlockPos pos) {
+    private boolean weather2compat$isRaining(Level instance, @Local(argsOnly = true) BlockPos pos) {
         return ServerTickHandler.getWeatherManagerFor(instance).isPrecipitatingAt(pos);
     }
 }
