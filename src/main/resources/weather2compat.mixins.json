@@ -4,6 +4,10 @@
     "package": "net.obf.weather2compat.mixin",
     "compatibilityLevel": "JAVA_21",
     "mixins": [
+        "BeeCompatMixin",
+        "BeehiveBlockEntityCompatMixin",
+        "BeePollinateGoalCompatMixin",
+        "FireCompatMixin",
         "Weather2CompatMixin"
     ],
     "injectors": {
