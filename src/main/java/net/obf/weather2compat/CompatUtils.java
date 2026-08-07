@@ -8,24 +8,52 @@ import weather2.ServerTickHandler;
 import weather2.weathersystem.storm.StormObject;
 import weather2.weathersystem.storm.WeatherObject;
 
+import java.util.function.Predicate;
+
+import static weather2.weathersystem.storm.StormObject.STATE_THUNDER;
+
+// TODO: can getWeatherManagerFor return null?
+// TODO: why does getStormObjects return WeatherObject if it only has StormObjects?
+// TODO: are weather2 storms spherical?
+
 public final class CompatUtils {
     private CompatUtils() {}
 
-    public static boolean isRainAbove(@NotNull Level level, @NotNull Vec3 pos) {
-        return isRainAbove(level, pos.x, pos.y, pos.z);
+    public static final Predicate<StormObject> RAIN_STORM =
+            so -> so.attrib_precipitation; // TODO: check specifics
+
+    public static final Predicate<StormObject> THUNDER_STORM =
+            so -> so.levelCurIntensityStage >= STATE_THUNDER
+                    && !so.isBaby()
+                    && !so.isPet();
+
+    public static boolean isStormAbove(
+            @NotNull Predicate<StormObject> predicate,
+            @NotNull Level level,
+            @NotNull Vec3 pos
+    ) {
+        return isStormAbove(predicate, level, pos.x, pos.y, pos.z);
     }
 
-    public static boolean isRainAbove(@NotNull Level level, @NotNull BlockPos pos) {
-        return isRainAbove(level, pos.getX(), pos.getY(), pos.getZ());
+    public static boolean isStormAbove(
+            @NotNull Predicate<StormObject> predicate,
+            @NotNull Level level,
+            @NotNull BlockPos pos
+    ) {
+        return isStormAbove(predicate, level, pos.getX(), pos.getY(), pos.getZ());
     }
 
-    public static boolean isRainAbove(@NotNull Level level, double x, double y, double z) {
-        // TODO: can getWeatherManagerFor return null?
-        // TODO: why does getStormObjects return WeatherObject if it only has StormObjects?
+    private static boolean isStormAbove(
+            @NotNull Predicate<StormObject> predicate,
+            @NotNull Level level,
+            double x,
+            double y,
+            double z
+    ) {
         for (WeatherObject wo : ServerTickHandler.getWeatherManagerFor(level).getStormObjects()) {
             StormObject so = (StormObject) wo;
 
-            if (so.isDead || !so.attrib_precipitation)
+            if (so.isDead || !predicate.test(so))
                 continue;
 
             double dx = so.pos.x - x;

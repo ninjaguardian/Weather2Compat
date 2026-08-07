@@ -21,6 +21,9 @@ public abstract class Weather2CompatMixin {
             Level level,
             @Local(argsOnly = true) BlockPos pos
     ) {
-        return CompatUtils.isRainAbove(level, pos);
+        return CompatUtils.isStormAbove(
+                CompatUtils.RAIN_STORM,
+                level, pos
+        );
     }
 }

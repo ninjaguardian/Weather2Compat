@@ -26,6 +26,9 @@ public abstract class BeePollinateGoalCompatMixin {
             )
     )
     private boolean weather2compat$isRaining(Level level) {
-        return CompatUtils.isRainAbove(level, this$0.position());
+        return CompatUtils.isStormAbove(
+                CompatUtils.RAIN_STORM,
+                level, this$0.position()
+        );
     }
 }

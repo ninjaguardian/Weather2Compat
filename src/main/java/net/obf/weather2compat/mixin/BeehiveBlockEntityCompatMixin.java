@@ -22,6 +22,9 @@ public abstract class BeehiveBlockEntityCompatMixin {
             Level level,
             @Local(argsOnly = true, ordinal = 0) BlockPos pos
     ) {
-        return CompatUtils.isRainAbove(level, pos);
+        return CompatUtils.isStormAbove(
+                CompatUtils.RAIN_STORM,
+                level, pos
+        );
     }
 }
