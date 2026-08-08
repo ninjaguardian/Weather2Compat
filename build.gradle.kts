@@ -3,7 +3,7 @@ plugins {
 }
 
 val javaVersion = providers.gradleProperty("java_version")
-val minecraftVersion = providers.gradleProperty("minecraft_version")
+val mcVersion = providers.gradleProperty("minecraft_version")
 val neoVersion = providers.gradleProperty("neo_version")
 val loaderVersionRange = providers.gradleProperty("loader_version_range")
 val modId = providers.gradleProperty("mod_id")
@@ -53,7 +53,9 @@ neoForge {
         }
     }
 
-    parchment.minecraftVersion.set(minecraftVersion)
+    parchment {
+        minecraftVersion.set(mcVersion)
+    }
 }
 
 sourceSets {
@@ -83,7 +85,7 @@ dependencies {
 
 tasks.processResources {
     val replaceProperties = mapOf(
-        "minecraft_version" to minecraftVersion,
+        "minecraft_version" to mcVersion,
         "neo_version" to neoVersion,
         "loader_version_range" to loaderVersionRange,
         "mod_id" to modId,
@@ -104,7 +106,6 @@ tasks.processResources {
         expand(replaceProperties.mapValues { it.value.get() })
     }
 }
-
 
 tasks.withType<JavaCompile>().configureEach {
     options.encoding = "UTF-8"

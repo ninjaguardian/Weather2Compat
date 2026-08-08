@@ -8,8 +8,11 @@
         "BeehiveBlockEntityCompatMixin",
         "BeePollinateGoalCompatMixin",
         "FireCompatMixin",
+        "FoxCompatMixin",
         "LevelCompatMixin",
         "LightningRodBlockCompat",
+        "PandaCompatMixin",
+        "SeekShelterGoalCompatMixin",
         "ServerLevelCompatMixin"
     ],
     "injectors": {
