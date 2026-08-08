@@ -7,15 +7,19 @@
         "BeehiveBlockEntityMixin",
         "BeeMixin",
         "BeePollinateGoalMixin",
+        "DaylightDetectorBlockMixin",
         "FireBlockMixin",
         "FoxMixin",
         "LevelMixin",
+        "LevelReaderMixin",
         "LightningRodBlockMixin",
         "MonsterMixin",
         "PandaMixin",
+        "PhantomSpawnerMixin",
         "SeekShelterGoalMixin",
         "ServerLevelMixin",
         "SleepGoalMixin",
+        "WanderingTraderMixin",
         "WeatherCheckMixin"
     ]
 }
