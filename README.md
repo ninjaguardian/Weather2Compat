@@ -4,7 +4,7 @@ Makes Minecraft use Weather2's (specifically [Weather Storms & Tornadoes](https:
 
 For example, farmland will grow if exposed to the sky during a rainstorm, bees will hide when it's raining, and lightning rods will sparkle during a thunderstorm.
 
-![NeoForge](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3.3.1/assets/cozy/supported/neoforge_vector.svg)
+[![NeoForge](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3.3.1/assets/cozy/supported/neoforge_vector.svg)](https://modrinth.com/mod/weather2-compat/versions?l=neoforge)
 
 ## Warning
 Some Minecraft blocks use a different rain checking system. Compatibility with Weather2 cannot be easily added to it, nor can it easily support mods that use that system, but I am working to manually add compatibility.

@@ -41,7 +41,7 @@ side = "BOTH"
 
 [[dependencies."${mod_id}"]]
 modId = "weather2"
-type = "required"
+type = "optional"
 versionRange = "[${weather_version},]"
 ordering = "NONE"
 side = "BOTH"
