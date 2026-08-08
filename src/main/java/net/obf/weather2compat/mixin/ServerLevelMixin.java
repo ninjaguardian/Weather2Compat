@@ -28,4 +28,36 @@ public abstract class ServerLevelMixin {
                 level, pos
         );
     }
+
+    /**
+     * Weather2 has its own lightning system
+     */
+    @Redirect(
+            method = "tickChunk",
+            require = 1,
+            allow = 1,
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/server/level/ServerLevel;isRaining()Z"
+            )
+    )
+    private boolean weather2compat$isRaining(ServerLevel level) {
+        return false;
+    }
+
+    /**
+     * Weather2 has its own lightning system
+     */
+    @Redirect(
+            method = "tickChunk",
+            require = 1,
+            allow = 1,
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/server/level/ServerLevel;isThundering()Z"
+            )
+    )
+    private boolean weather2compat$isThundering(ServerLevel level) {
+        return false;
+    }
 }

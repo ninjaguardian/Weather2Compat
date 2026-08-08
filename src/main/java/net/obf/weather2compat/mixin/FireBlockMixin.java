@@ -8,6 +8,9 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(FireBlock.class)
 public abstract class FireBlockMixin {
+    /**
+     * Both calls check {@code isNearRain}, which checks {@link ServerLevel#isRainingAt}
+     */
     @Redirect(
             method = "tick",
             require = 2,
