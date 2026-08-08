@@ -1,13 +1,14 @@
 {
     "homepage": "https://modrinth.com/mod/weather2-compat",
     "1.21.1": {
+        "1.3.0": "Add ServerLevel and lightning rod compat",
         "1.2.1": "Switch to custom, faster rain checker",
         "1.2.0": "Add bees and fire compat",
         "1.1.0": "Make rain checker detect if pos can see sky",
         "1.0.0": "Initial BlockPos rain detection"
     },
     "promos": {
-        "1.21.1-latest": "1.2.1",
-        "1.21.1-recommended": "1.2.1"
+        "1.21.1-latest": "1.3.0",
+        "1.21.1-recommended": "1.3.0"
     }
 }

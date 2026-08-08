@@ -24,6 +24,13 @@ jobs:
           
           mod_version=$(grep '^mod_version=' gradle.properties | cut -d'=' -f2)
           minecraft_version=$(grep '^minecraft_version=' gradle.properties | cut -d'=' -f2)
+  
+          if ! jq -e --arg version "$minecraft_version" --arg mod_version "$mod_version" \
+            '.[$version][$mod_version] != null' update.json > /dev/null; then
+            echo "::error::Version $mod_version does not exist in update.json[$minecraft_version]"
+            exit 1
+          fi
+          
           promo_version=$(jq -er --arg key "${minecraft_version}-latest" '.promos[$key]' update.json)
 
           if [[ "$mod_version" != "$promo_version" ]]; then
