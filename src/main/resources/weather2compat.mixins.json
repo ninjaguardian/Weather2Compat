@@ -8,9 +8,9 @@
         "BeehiveBlockEntityCompatMixin",
         "BeePollinateGoalCompatMixin",
         "FireCompatMixin",
+        "LevelCompatMixin",
         "LightningRodBlockCompat",
-        "ServerLevelCompatMixin",
-        "Weather2CompatMixin"
+        "ServerLevelCompatMixin"
     ],
     "injectors": {
         "defaultRequire": 1

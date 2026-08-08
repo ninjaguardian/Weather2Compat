@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(LightningRodBlock.class)
-public class LightningRodBlockCompat {
+public abstract class LightningRodBlockCompat {
     @Redirect(
             method = "animateTick",
             at = @At(

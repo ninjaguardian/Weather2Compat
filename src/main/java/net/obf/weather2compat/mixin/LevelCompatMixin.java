@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(Level.class)
-public abstract class Weather2CompatMixin {
+public abstract class LevelCompatMixin {
     @Redirect(
             method = "isRainingAt",
             at = @At(
