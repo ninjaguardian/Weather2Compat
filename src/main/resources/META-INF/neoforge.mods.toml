@@ -1,6 +1,7 @@
 modLoader = "javafml"
 loaderVersion = "${loader_version_range}"
 license = "${mod_license}"
+issueTrackerURL = "https://github.com/ninjaguardian/Weather2Compat/issues"
 
 [[mods]]
 modId = "${mod_id}"
@@ -8,9 +9,17 @@ version = "${mod_version}"
 displayName = "${mod_name}"
 authors = "${mod_authors}"
 description = '''${mod_description}'''
+logoFile = "logo.png"
+updateJSONURL = "https://raw.githubusercontent.com/ninjaguardian/Weather2Compat/refs/heads/main/update.json"
+modUrl = "https://modrinth.com/mod/weather2-compat/versions"
+displayURL = "https://modrinth.com/mod/weather2-compat"
+
+[features."${mod_id}"]
+javaVersion="[${java_version},)"
 
 [[mixins]]
 config = "${mod_id}.mixins.json"
+requiredMods = ["weather2"]
 
 [[dependencies."${mod_id}"]]
 modId = "neoforge"
@@ -18,6 +27,7 @@ type = "required"
 versionRange = "[${neo_version},)"
 ordering = "NONE"
 side = "BOTH"
+referralUrl = "https://neoforged.net"
 
 [[dependencies."${mod_id}"]]
 modId = "minecraft"
@@ -32,3 +42,4 @@ type = "required"
 versionRange = "[${weather_version},]"
 ordering = "NONE"
 side = "BOTH"
+referralUrl = "https://modrinth.com/mod/weather-storms-tornadoes"

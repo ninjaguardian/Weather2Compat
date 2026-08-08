@@ -1,8 +1,8 @@
 plugins {
-    id("java-library")
     id("net.neoforged.moddev") version "2.0.143"
 }
 
+val javaVersion = providers.gradleProperty("java_version")
 val minecraftVersion = providers.gradleProperty("minecraft_version")
 val neoVersion = providers.gradleProperty("neo_version")
 val loaderVersionRange = providers.gradleProperty("loader_version_range")
@@ -23,8 +23,12 @@ base {
 }
 
 java {
+    val java = JavaVersion.toVersion(javaVersion.get())
+    targetCompatibility = java
+    sourceCompatibility = java
+
     toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
+        languageVersion.set(javaVersion.map(JavaLanguageVersion::of))
     }
 
     withSourcesJar()
@@ -88,14 +92,15 @@ tasks.processResources {
         "mod_version" to modVersion,
         "mod_authors" to modAuthors,
         "mod_description" to modDescription,
-        "weather_version" to weatherVersion
+        "weather_version" to weatherVersion,
+        "java_version" to javaVersion
     )
 
     inputs.properties(replaceProperties)
 
     filteringCharset = "UTF-8"
 
-    filesMatching("META-INF/neoforge.mods.toml") {
+    filesMatching(listOf("*.mixins.json", "META-INF/neoforge.mods.toml")) {
         expand(replaceProperties.mapValues { it.value.get() })
     }
 }
