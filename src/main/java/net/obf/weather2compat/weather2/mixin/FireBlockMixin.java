@@ -1,4 +1,4 @@
-package net.obf.weather2compat.mixin;
+package net.obf.weather2compat.weather2.mixin;
 
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.FireBlock;

@@ -1,14 +1,14 @@
-package net.obf.weather2compat.mixin;
+package net.obf.weather2compat.weather2.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.storage.loot.LootContext;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.WeatherCheck;
 import net.minecraft.world.phys.Vec3;
-import net.obf.weather2compat.Weather2Utils;
+import net.obf.weather2compat.MinecraftUtils;
+import net.obf.weather2compat.weather2.Weather2Utils;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -29,7 +29,7 @@ public abstract class WeatherCheckMixin {
             Operation<Boolean> original,
             @Local(argsOnly = true) LootContext context
     ) {
-        @Nullable Vec3 pos = context.getParamOrNull(LootContextParams.ORIGIN);
+        @Nullable Vec3 pos = MinecraftUtils.getPos(context);
 
         if (pos == null)
             return original.call(level);
@@ -54,7 +54,7 @@ public abstract class WeatherCheckMixin {
             Operation<Boolean> original,
             @Local(argsOnly = true) LootContext context
     ) {
-        @Nullable Vec3 pos = context.getParamOrNull(LootContextParams.ORIGIN);
+        @Nullable Vec3 pos = MinecraftUtils.getPos(context);
 
         if (pos == null)
             return original.call(level);

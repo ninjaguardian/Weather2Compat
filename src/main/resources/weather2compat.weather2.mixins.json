@@ -1,0 +1,20 @@
+{
+    "required": true,
+    "minVersion": "0.8",
+    "package": "net.obf.weather2compat.weather2.mixin",
+    "compatibilityLevel": "JAVA_${java_version}",
+    "mixins": [
+        "BeehiveBlockEntityMixin",
+        "BeeMixin",
+        "BeePollinateGoalMixin",
+        "FireBlockMixin",
+        "FoxMixin",
+        "LevelMixin",
+        "LightningRodBlockMixin",
+        "MonsterMixin",
+        "PandaMixin",
+        "SeekShelterGoalMixin",
+        "ServerLevelMixin",
+        "WeatherCheckMixin"
+    ]
+}

@@ -1,8 +1,8 @@
-package net.obf.weather2compat.mixin;
+package net.obf.weather2compat.weather2.mixin;
 
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.level.Level;
-import net.obf.weather2compat.Weather2Utils;
+import net.obf.weather2compat.weather2.Weather2Utils;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
