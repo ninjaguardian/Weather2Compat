@@ -15,6 +15,7 @@
         "PandaMixin",
         "SeekShelterGoalMixin",
         "ServerLevelMixin",
+        "SleepGoalMixin",
         "WeatherCheckMixin"
     ]
 }

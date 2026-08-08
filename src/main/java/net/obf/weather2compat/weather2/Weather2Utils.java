@@ -15,6 +15,8 @@ import static weather2.weathersystem.storm.StormObject.STATE_THUNDER;
 // TODO: can getWeatherManagerFor return null?
 // TODO: why does getStormObjects return WeatherObject if it only has StormObjects?
 // TODO: are weather2 storms spherical?
+// TODO: should i search at y=static_YPos_layer0?
+// TODO: should i include y in weather search?
 
 public final class Weather2Utils {
     private Weather2Utils() {}
@@ -32,7 +34,7 @@ public final class Weather2Utils {
             @NotNull Level level,
             @NotNull Vec3 pos
     ) {
-        return isStormAbove(predicate, level, pos.x, pos.y, pos.z);
+        return isStormAbove(predicate, level, pos.x, pos.z);
     }
 
     public static boolean isStormAbove(
@@ -40,15 +42,13 @@ public final class Weather2Utils {
             @NotNull Level level,
             @NotNull BlockPos pos
     ) {
-        return isStormAbove(predicate, level, pos.getX(), pos.getY(), pos.getZ());
+        return isStormAbove(predicate, level, pos.getX(), pos.getZ());
     }
 
     private static boolean isStormAbove(
             @NotNull Predicate<StormObject> predicate,
             @NotNull Level level,
-            double x,
-            double y,
-            double z
+            double x, double z
     ) {
         for (WeatherObject wo : ServerTickHandler.getWeatherManagerFor(level).getStormObjects()) {
             StormObject so = (StormObject) wo;
@@ -57,10 +57,9 @@ public final class Weather2Utils {
                 continue;
 
             double dx = so.pos.x - x;
-            double dy = so.pos.y - y;
             double dz = so.pos.z - z;
 
-            if (dx * dx + dy * dy + dz * dz < so.size * so.size)
+            if (dx * dx + dz * dz < so.size * so.size)
                 return true;
         }
 

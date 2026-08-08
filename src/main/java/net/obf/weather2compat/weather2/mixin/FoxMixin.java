@@ -9,8 +9,6 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(Fox.class)
 public abstract class FoxMixin {
-    // TODO: some foxes freeze when woken up by thunder
-
     @Redirect(
             method = "tick",
             require = 1,
