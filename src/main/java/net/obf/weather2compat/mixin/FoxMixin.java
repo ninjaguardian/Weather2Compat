@@ -2,30 +2,26 @@ package net.obf.weather2compat.mixin;
 
 import net.minecraft.world.entity.animal.Fox;
 import net.minecraft.world.level.Level;
-import net.obf.weather2compat.CompatUtils;
-import org.spongepowered.asm.mixin.Final;
+import net.obf.weather2compat.Weather2Utils;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-@Mixin(targets = "net.minecraft.world.entity.animal.Fox$SeekShelterGoal")
-public abstract class SeekShelterGoalCompatMixin {
-    @Final
-    @Shadow
-    Fox this$0;
-
+@Mixin(Fox.class)
+public abstract class FoxMixin {
     @Redirect(
-            method = "canUse",
+            method = "tick",
+            require = 1,
+            allow = 1,
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/world/level/Level;isThundering()Z"
             )
     )
     private boolean weather2compat$isThundering(Level level) {
-        return CompatUtils.isStormAbove(
-                CompatUtils.THUNDER_STORM,
-                level, this$0.position()
+        return Weather2Utils.isStormAbove(
+                Weather2Utils.THUNDER_STORM, level,
+                ((Fox) (Object) this).position()
         );
     }
 }

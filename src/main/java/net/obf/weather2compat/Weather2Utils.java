@@ -16,8 +16,8 @@ import static weather2.weathersystem.storm.StormObject.STATE_THUNDER;
 // TODO: why does getStormObjects return WeatherObject if it only has StormObjects?
 // TODO: are weather2 storms spherical?
 
-public final class CompatUtils {
-    private CompatUtils() {}
+public final class Weather2Utils {
+    private Weather2Utils() {}
 
     public static final Predicate<StormObject> RAIN_STORM =
             so -> so.attrib_precipitation; // TODO: check specifics

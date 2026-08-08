@@ -4,18 +4,15 @@
     "package": "net.obf.weather2compat.mixin",
     "compatibilityLevel": "JAVA_${java_version}",
     "mixins": [
-        "BeeCompatMixin",
-        "BeehiveBlockEntityCompatMixin",
-        "BeePollinateGoalCompatMixin",
-        "FireCompatMixin",
-        "FoxCompatMixin",
-        "LevelCompatMixin",
-        "LightningRodBlockCompat",
-        "PandaCompatMixin",
-        "SeekShelterGoalCompatMixin",
-        "ServerLevelCompatMixin"
-    ],
-    "injectors": {
-        "defaultRequire": 1
-    }
+        "BeeMixin",
+        "BeehiveBlockEntityMixin",
+        "BeePollinateGoalMixin",
+        "FireBlockMixin",
+        "FoxMixin",
+        "LevelMixin",
+        "LightningRodBlockMixin",
+        "PandaMixin",
+        "SeekShelterGoalMixin",
+        "ServerLevelMixin"
+    ]
 }

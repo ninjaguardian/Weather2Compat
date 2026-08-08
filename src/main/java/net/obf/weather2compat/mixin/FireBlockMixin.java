@@ -7,9 +7,11 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(FireBlock.class)
-public abstract class FireCompatMixin {
+public abstract class FireBlockMixin {
     @Redirect(
             method = "tick",
+            require = 2,
+            allow = 2,
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/server/level/ServerLevel;isRaining()Z"
