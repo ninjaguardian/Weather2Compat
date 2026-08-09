@@ -9,6 +9,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(Player.class)
 public abstract class PlayerMixin {
+    // TODO: is this neoforge only?
     @Redirect(
             method = "tick",
             require = 1,
