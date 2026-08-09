@@ -86,33 +86,31 @@ public final class Weather2Utils {
 
             double dx = so.pos.x - x;
             double dz = so.pos.z - z;
-            double distance = Math.sqrt(dx * dx + dz * dz);
+            double distance = dx * dx + dz * dz;
 
-            if (distance >= so.size)
+            if (distance >= so.size * so.size)
                 continue;
 
-            float strength = (float) ((so.size - distance) / so.size);
+            float factor = (float)(Math.sqrt(distance) / so.size);
 
-            if (so.levelCurIntensityStage == StormObject.STATE_NORMAL)
-                strength = Math.min(strength, 0.3F);
+            if (so.levelCurIntensityStage == StormObject.STATE_NORMAL && factor < 0.7F)
+                factor = 0.7F;
 
-            combined *= 1.0F - strength;
+            combined *= factor;
         }
 
         return 1.0F - combined;
     }
-
-    private static final float TAU = (float) (Math.PI * 2);
 
     private static int getSkyDarken(
             @NotNull Level level,
             double x, double z
     ) {
         WeatherManagerServer manager = ServerTickHandler.getWeatherManagerFor(level);
-        double d0 = 1.0 - getPrecipitationStrength(RAIN_STORM, manager, x, z) * 5.0 / 16.0;
-        double d1 = 1.0 - getPrecipitationStrength(THUNDER_STORM, manager, x, z) * 5.0 / 16.0;
-        double d2 = 0.5 + 2.0 * Mth.clamp(Mth.cos(level.getTimeOfDay(1.0F) * TAU), -0.25, 0.25);
-        return (int)((1.0 - d2 * d0 * d1) * 11.0);
+        float d0 = 1.0F - getPrecipitationStrength(RAIN_STORM, manager, x, z) * 5.0F / 16.0F;
+        float d1 = 1.0F - getPrecipitationStrength(THUNDER_STORM, manager, x, z) * 5.0F / 16.0F;
+        float d2 = 0.5F + 2.0F * Mth.clamp(Mth.cos(level.getTimeOfDay(1.0F) * Mth.TWO_PI), -0.25F, 0.25F);
+        return Math.round((1.0F - d2 * d0 * d1) * 11.0F);
     }
 
     public static int getSkyDarken(
@@ -140,7 +138,7 @@ public final class Weather2Utils {
             @NotNull Level level,
             double x, double z
     ) {
-        return !level.dimensionType().hasFixedTime() && !isDay(level, x, z);
+        return !level.dimensionType().hasFixedTime() && getSkyDarken(level, x, z) >= 4;
     }
 
     public static boolean isNight(
