@@ -5,6 +5,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import weather2.ServerTickHandler;
 import weather2.config.ConfigMisc;
 import weather2.weathersystem.WeatherManagerServer;
@@ -13,9 +14,10 @@ import weather2.weathersystem.storm.WeatherObject;
 
 import java.util.function.Predicate;
 
+import static net.obf.weather2compat.MinecraftUtils.LOGGER;
 import static weather2.weathersystem.storm.StormObject.STATE_THUNDER;
 
-// TODO: can getWeatherManagerFor return null?
+// TODO: why can getWeatherManagerFor return null?
 // TODO: why does getStormObjects return WeatherObject if it only has StormObjects?
 // TODO: are weather2 storms spherical?
 // TODO: should i search at y=static_YPos_layer0?
@@ -53,7 +55,14 @@ public final class Weather2Utils {
             @NotNull Level level,
             double x, double z
     ) {
-        for (WeatherObject wo : ServerTickHandler.getWeatherManagerFor(level).getStormObjects()) {
+        @Nullable WeatherManagerServer manager = ServerTickHandler.getWeatherManagerFor(level);
+
+        if (manager == null) {
+            LOGGER.warn("No WeatherManagerServer found for level {} while checking for storms (this is only a problem if it persists)", level.dimension().location());
+            return false;
+        }
+
+        for (WeatherObject wo : manager.getStormObjects()) {
             StormObject so = (StormObject) wo;
 
             if (so.isDead || !predicate.test(so))
@@ -106,9 +115,19 @@ public final class Weather2Utils {
             @NotNull Level level,
             double x, double z
     ) {
-        WeatherManagerServer manager = ServerTickHandler.getWeatherManagerFor(level);
-        float d0 = 1.0F - getPrecipitationStrength(RAIN_STORM, manager, x, z) * 5.0F / 16.0F;
-        float d1 = 1.0F - getPrecipitationStrength(THUNDER_STORM, manager, x, z) * 5.0F / 16.0F;
+        @Nullable WeatherManagerServer manager = ServerTickHandler.getWeatherManagerFor(level);
+
+        float rainLevel = 0.0F;
+        float thunderLevel = 0.0F;
+        if (manager == null) {
+            LOGGER.warn("No WeatherManagerServer found for level {} while checking sky darkness (this is only a problem if it persists)", level.dimension().location());
+        } else {
+            rainLevel = getPrecipitationStrength(RAIN_STORM, manager, x, z);
+            thunderLevel = getPrecipitationStrength(THUNDER_STORM, manager, x, z);
+        }
+
+        float d0 = 1.0F - rainLevel * 5.0F / 16.0F;
+        float d1 = 1.0F - thunderLevel * 5.0F / 16.0F;
         float d2 = 0.5F + 2.0F * Mth.clamp(Mth.cos(level.getTimeOfDay(1.0F) * Mth.TWO_PI), -0.25F, 0.25F);
         return Math.round((1.0F - d2 * d0 * d1) * 11.0F);
     }

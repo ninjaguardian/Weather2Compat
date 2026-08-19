@@ -8,8 +8,12 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public final class MinecraftUtils {
+    public static final Logger LOGGER = LoggerFactory.getLogger("Weather2Compat");
+
     private MinecraftUtils() {}
 
     @Nullable
