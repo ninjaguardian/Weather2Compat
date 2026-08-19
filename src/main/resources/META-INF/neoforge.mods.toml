@@ -24,6 +24,10 @@ config = "${mod_id}.mixins.json"
 config = "${mod_id}.weather2.mixins.json"
 requiredMods = ["weather2"]
 
+[[mixins]]
+config = "${mod_id}.sereneseasons.mixins.json"
+requiredMods = ["weather2", "sereneseasons"]
+
 [[dependencies."${mod_id}"]]
 modId = "neoforge"
 type = "required"
@@ -46,3 +50,11 @@ versionRange = "[${weather_version},]"
 ordering = "NONE"
 side = "BOTH"
 referralUrl = "https://modrinth.com/mod/weather-storms-tornadoes"
+
+[[dependencies."${mod_id}"]]
+modId = "sereneseasons"
+type = "optional"
+versionRange = "[${sereneseasons_version},]"
+ordering = "NONE"
+side = "BOTH"
+referralUrl = "https://modrinth.com/mod/serene-seasons"

@@ -14,6 +14,7 @@ val modGroup = providers.gradleProperty("mod_group_id")
 val modAuthors = providers.gradleProperty("mod_authors")
 val modDescription = providers.gradleProperty("mod_description")
 val weatherVersion = providers.gradleProperty("weather_version")
+val sereneSeasonsVersion = providers.gradleProperty("sereneseasons_version")
 
 version = modVersion.get()
 group = modGroup.get()
@@ -79,8 +80,21 @@ repositories {
     }
 }
 
+fun DependencyHandler.implementationMod(modId: String, modVersion: Provider<String>) {
+    implementation("maven.modrinth:$modId:${modVersion.get()}-neoforge,${mcVersion.get()}")
+}
+
+fun DependencyHandler.compileOnlyMod(modId: String, modVersion: Provider<String>) {
+    compileOnly("maven.modrinth:$modId:${modVersion.get()}-neoforge,${mcVersion.get()}")
+}
+
+fun DependencyHandler.runtimeOnlyMod(modId: String, modVersion: Provider<String>) {
+    runtimeOnly("maven.modrinth:$modId:${modVersion.get()}-neoforge,${mcVersion.get()}")
+}
+
 dependencies {
-    implementation("maven.modrinth:weather-storms-tornadoes:${weatherVersion.get()}")
+    implementationMod("weather-storms-tornadoes", weatherVersion)
+    compileOnlyMod("serene-seasons", sereneSeasonsVersion)
 }
 
 tasks.processResources {
@@ -95,7 +109,8 @@ tasks.processResources {
         "mod_authors" to modAuthors,
         "mod_description" to modDescription,
         "weather_version" to weatherVersion,
-        "java_version" to javaVersion
+        "java_version" to javaVersion,
+        "sereneseasons_version" to sereneSeasonsVersion
     )
 
     inputs.properties(replaceProperties)

@@ -1,0 +1,9 @@
+{
+    "required": true,
+    "minVersion": "0.8",
+    "package": "net.obf.weather2compat.weather2.sereneseasons.mixin",
+    "compatibilityLevel": "JAVA_${java_version}",
+    "mixins": [
+        "SeasonHooksMixin"
+    ]
+}
