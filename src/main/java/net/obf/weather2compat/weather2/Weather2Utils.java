@@ -50,7 +50,7 @@ public final class Weather2Utils {
         return isStormAbove(predicate, level, pos.getX(), pos.getZ());
     }
 
-    private static boolean isStormAbove(
+    public static boolean isStormAbove(
             @NotNull Predicate<StormObject> predicate,
             @NotNull Level level,
             double x, double z
@@ -78,7 +78,7 @@ public final class Weather2Utils {
         return false;
     }
 
-    private static float getPrecipitationStrength(
+    public static float getPrecipitationStrength(
             @NotNull Predicate<StormObject> predicate,
             @NotNull WeatherManagerServer manager,
             double x, double z
@@ -101,6 +101,7 @@ public final class Weather2Utils {
                 continue;
 
             float factor = (float)(Math.sqrt(distance) / so.size);
+            factor = Math.max(factor * 1.1F - 0.1F, 0.0F);
 
             if (so.levelCurIntensityStage == StormObject.STATE_NORMAL && factor < 0.7F)
                 factor = 0.7F;
@@ -111,7 +112,7 @@ public final class Weather2Utils {
         return 1.0F - combined;
     }
 
-    private static int getSkyDarken(
+    public static int getSkyDarken(
             @NotNull Level level,
             double x, double z
     ) {
@@ -139,7 +140,7 @@ public final class Weather2Utils {
         return getSkyDarken(level, pos.getX(), pos.getZ());
     }
 
-    private static boolean isDay(
+    public static boolean isDay(
             @NotNull Level level,
             double x, double z
     ) {
@@ -153,7 +154,7 @@ public final class Weather2Utils {
         return isDay(level, pos.x, pos.z);
     }
 
-    private static boolean isNight(
+    public static boolean isNight(
             @NotNull Level level,
             double x, double z
     ) {
