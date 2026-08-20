@@ -1,6 +1,7 @@
 {
     "homepage": "https://modrinth.com/mod/weather2-compat",
     "1.21.1": {
+        "1.6.0": "(Partial) Serene Seasons compat",
         "1.5.2": "Fix crash with null WeatherManagerServer",
         "1.5.1": "Optimize rain strength calculations and enforce night-only sleeping",
         "1.5.0": "Wandering trader, phantom, and daylight detector compat (+ fixes)",
@@ -13,7 +14,7 @@
         "1.0.0": "Initial BlockPos rain detection"
     },
     "promos": {
-        "1.21.1-latest": "1.5.2",
-        "1.21.1-recommended": "1.5.2"
+        "1.21.1-latest": "1.6.0",
+        "1.21.1-recommended": "1.6.0"
     }
 }
