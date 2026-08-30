@@ -4,8 +4,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import net.obf.weather2compat.client.WeatherUtil;
 import org.jetbrains.annotations.Nullable;
-import weather2.ClientTickHandler;
 import weather2.ServerTickHandler;
 import weather2.config.ConfigMisc;
 import weather2.weathersystem.WeatherManager;
@@ -31,7 +31,7 @@ public final class Weather2Utils {
 
     @Nullable
     private static WeatherManager getWeatherManager(Level level) {
-        return level.isClientSide() ? ClientTickHandler.getClientWeather() : ServerTickHandler.getWeatherManagerFor(level);
+        return level.isClientSide() ? WeatherUtil.getClientWeather() : ServerTickHandler.getWeatherManagerFor(level);
     }
 
     public static boolean isStormAbove(Predicate<StormObject> predicate, Level level, Vec3 pos) {
