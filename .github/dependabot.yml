@@ -1,0 +1,30 @@
+version: 2
+
+registries:
+  neoforged:
+    type: maven-repository
+    url: https://maven.neoforged.net/releases
+
+  modrinth:
+    type: maven-repository
+    url: https://api.modrinth.com/maven
+
+updates:
+  - package-ecosystem: "gradle"
+    directory: "/"
+    target-branch: "main"
+    schedule:
+      interval: "weekly"
+    registries:
+      - neoforged
+      - modrinth
+    assignees:
+      - "ninjaguardian"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    target-branch: "main"
+    schedule:
+      interval: "weekly"
+    assignees:
+      - "ninjaguardian"
