@@ -15,6 +15,7 @@ val modAuthors = providers.gradleProperty("mod_authors")
 val modDescription = providers.gradleProperty("mod_description")
 val weatherVersion = providers.gradleProperty("weather_version")
 val sereneSeasonsVersion = providers.gradleProperty("sereneseasons_version")
+val coroutilVersion = providers.gradleProperty("coroutil_version")
 
 version = modVersion.get()
 group = modGroup.get()
@@ -95,6 +96,7 @@ fun DependencyHandler.runtimeOnlyMod(modId: String, modVersion: Provider<String>
 dependencies {
     implementationMod("weather-storms-tornadoes", weatherVersion)
     compileOnlyMod("serene-seasons", sereneSeasonsVersion)
+    runtimeOnlyMod("coroutil", coroutilVersion)
 }
 
 tasks.processResources {
