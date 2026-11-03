@@ -12,6 +12,7 @@ import weather2.weathersystem.WeatherManagerServer;
 import weather2.weathersystem.storm.StormObject;
 import weather2.weathersystem.storm.WeatherObject;
 
+import java.util.List;
 import java.util.function.Predicate;
 
 import static net.obf.weather2compat.MinecraftUtils.LOGGER;
@@ -61,7 +62,15 @@ public final class Weather2Utils {
             return false;
         }
 
-        for (WeatherObject wo : manager.getStormObjects()) {
+        return isStormAbove(predicate, manager.getStormObjects(), x, z);
+    }
+
+    public static boolean isStormAbove(
+            @NotNull Predicate<StormObject> predicate,
+            @NotNull List<WeatherObject> stormObjects,
+            double x, double z
+    ) {
+        for (WeatherObject wo : stormObjects) {
             if (!(wo instanceof StormObject so) || so.isDead || !predicate.test(so))
                 continue;
 
