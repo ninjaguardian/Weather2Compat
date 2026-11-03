@@ -18,7 +18,6 @@ import static net.obf.weather2compat.MinecraftUtils.LOGGER;
 import static weather2.weathersystem.storm.StormObject.STATE_THUNDER;
 
 // TODO: why can getWeatherManagerFor return null?
-// TODO: why does getStormObjects return WeatherObject if it only has StormObjects?
 // TODO: are weather2 storms spherical?
 // TODO: should i search at y=static_YPos_layer0?
 // TODO: should i include y in weather search?
@@ -63,9 +62,7 @@ public final class Weather2Utils {
         }
 
         for (WeatherObject wo : manager.getStormObjects()) {
-            StormObject so = (StormObject) wo;
-
-            if (so.isDead || !predicate.test(so))
+            if (!(wo instanceof StormObject so) || so.isDead || !predicate.test(so))
                 continue;
 
             double dx = so.pos.x - x;
@@ -89,8 +86,7 @@ public final class Weather2Utils {
             combined -= manager.vanillaRainAmountOnServer;
 
         for (WeatherObject wo : manager.getStormObjects()) {
-            StormObject so = (StormObject) wo;
-            if (so.isDead || !predicate.test(so))
+            if (!(wo instanceof StormObject so) || so.isDead || !predicate.test(so))
                 continue;
 
             double dx = so.pos.x - x;
