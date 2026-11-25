@@ -132,7 +132,7 @@ public final class Weather2Utils {
         float rainLevel = 0.0F;
         float thunderLevel = 0.0F;
         if (manager == null) {
-            LOGGER.warn("No WeatherManagerServer found for level {} while checking sky darkness (this is only a problem if it persists)", level.dimension().location());
+            LOGGER.warn("No WeatherManager found for level {} while checking sky darkness (this is only a problem if it persists)", level.dimension().location());
         } else {
             rainLevel = getPrecipitationStrength(RAIN_STORM, manager, x, z);
             thunderLevel = getPrecipitationStrength(THUNDER_STORM, manager, x, z);

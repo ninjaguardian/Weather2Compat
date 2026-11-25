@@ -9,6 +9,10 @@ registries:
     type: maven-repository
     url: https://api.modrinth.com/maven
 
+  curseforge:
+    type: maven-repository
+    url: https://cursemaven.com
+
 updates:
   - package-ecosystem: "gradle"
     directory: "/"
@@ -18,6 +22,7 @@ updates:
     registries:
       - neoforged
       - modrinth
+      - curseforge
     assignees:
       - "ninjaguardian"
 
