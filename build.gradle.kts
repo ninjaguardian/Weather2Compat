@@ -15,6 +15,7 @@ val modAuthors = providers.gradleProperty("mod_authors")
 val modDescription = providers.gradleProperty("mod_description")
 val weatherVersion = providers.gradleProperty("weather_version")
 val sereneSeasonsVersion = providers.gradleProperty("sereneseasons_version")
+val coroutilVersion = providers.gradleProperty("coroutil_version")
 
 version = modVersion.get()
 group = modGroup.get()
@@ -78,23 +79,30 @@ repositories {
             includeGroup("maven.modrinth")
         }
     }
+    exclusiveContent {
+        forRepository {
+            maven("https://cursemaven.com") {
+                name = "CurseMaven"
+            }
+        }
+        filter {
+            includeGroup("curse.maven")
+        }
+    }
 }
 
-fun DependencyHandler.implementationMod(modId: String, modVersion: Provider<String>) {
-    implementation("maven.modrinth:$modId:${modVersion.get()}-neoforge,${mcVersion.get()}")
+fun mod(modId: String, modVersion: Provider<String>): String {
+    return "maven.modrinth:$modId:${modVersion.get()}-neoforge,${mcVersion.get()}"
 }
 
-fun DependencyHandler.compileOnlyMod(modId: String, modVersion: Provider<String>) {
-    compileOnly("maven.modrinth:$modId:${modVersion.get()}-neoforge,${mcVersion.get()}")
-}
-
-fun DependencyHandler.runtimeOnlyMod(modId: String, modVersion: Provider<String>) {
-    runtimeOnly("maven.modrinth:$modId:${modVersion.get()}-neoforge,${mcVersion.get()}")
+fun curseMod(projectId: String, fileId: Provider<String>): String {
+    return "curse.maven:$projectId:${fileId.get()}"
 }
 
 dependencies {
-    implementationMod("weather-storms-tornadoes", weatherVersion)
-    compileOnlyMod("serene-seasons", sereneSeasonsVersion)
+    implementation(mod("weather-storms-tornadoes", weatherVersion))
+    compileOnly(mod("serene-seasons", sereneSeasonsVersion))
+    runtimeOnly(curseMod("coroutil-237749", coroutilVersion))
 }
 
 tasks.processResources {

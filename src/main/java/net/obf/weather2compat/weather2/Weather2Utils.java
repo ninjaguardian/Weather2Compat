@@ -4,14 +4,15 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.NotNull;
+import net.obf.weather2compat.client.WeatherUtil;
 import org.jetbrains.annotations.Nullable;
 import weather2.ServerTickHandler;
 import weather2.config.ConfigMisc;
-import weather2.weathersystem.WeatherManagerServer;
+import weather2.weathersystem.WeatherManager;
 import weather2.weathersystem.storm.StormObject;
 import weather2.weathersystem.storm.WeatherObject;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -23,6 +24,7 @@ import static weather2.weathersystem.storm.StormObject.STATE_THUNDER;
 // TODO: should i search at y=static_YPos_layer0?
 // TODO: should i include y in weather search?
 
+@ParametersAreNonnullByDefault
 public final class Weather2Utils {
     private Weather2Utils() {}
 
@@ -34,31 +36,36 @@ public final class Weather2Utils {
                     && !so.isBaby()
                     && !so.isPet();
 
+    @Nullable
+    private static WeatherManager getWeatherManager(Level level) {
+        return level.isClientSide() ? WeatherUtil.getClientWeather() : ServerTickHandler.getWeatherManagerFor(level);
+    }
+
     public static boolean isStormAbove(
-            @NotNull Predicate<StormObject> predicate,
-            @NotNull Level level,
-            @NotNull Vec3 pos
+            Predicate<StormObject> predicate,
+            Level level,
+            Vec3 pos
     ) {
         return isStormAbove(predicate, level, pos.x, pos.z);
     }
 
     public static boolean isStormAbove(
-            @NotNull Predicate<StormObject> predicate,
-            @NotNull Level level,
-            @NotNull BlockPos pos
+            Predicate<StormObject> predicate,
+            Level level,
+            BlockPos pos
     ) {
         return isStormAbove(predicate, level, pos.getX(), pos.getZ());
     }
 
     public static boolean isStormAbove(
-            @NotNull Predicate<StormObject> predicate,
-            @NotNull Level level,
+            Predicate<StormObject> predicate,
+            Level level,
             double x, double z
     ) {
-        @Nullable WeatherManagerServer manager = ServerTickHandler.getWeatherManagerFor(level);
+        @Nullable WeatherManager manager = getWeatherManager(level);
 
         if (manager == null) {
-            LOGGER.warn("No WeatherManagerServer found for level {} while checking for storms (this is only a problem if it persists)", level.dimension().location());
+            LOGGER.warn("No WeatherManager found for level {} while checking for storms (this is only a problem if it persists)", level.dimension().location());
             return false;
         }
 
@@ -66,8 +73,8 @@ public final class Weather2Utils {
     }
 
     public static boolean isStormAbove(
-            @NotNull Predicate<StormObject> predicate,
-            @NotNull List<WeatherObject> stormObjects,
+            Predicate<StormObject> predicate,
+            List<WeatherObject> stormObjects,
             double x, double z
     ) {
         for (WeatherObject wo : stormObjects) {
@@ -76,8 +83,9 @@ public final class Weather2Utils {
 
             double dx = so.pos.x - x;
             double dz = so.pos.z - z;
+            double size = so.size;
 
-            if (dx * dx + dz * dz < so.size * so.size)
+            if (dx * dx + dz * dz < size * size)
                 return true;
         }
 
@@ -85,8 +93,8 @@ public final class Weather2Utils {
     }
 
     public static float getPrecipitationStrength(
-            @NotNull Predicate<StormObject> predicate,
-            @NotNull WeatherManagerServer manager,
+            Predicate<StormObject> predicate,
+            WeatherManager manager,
             double x, double z
     ) {
         float combined = 1.0F;
@@ -101,11 +109,12 @@ public final class Weather2Utils {
             double dx = so.pos.x - x;
             double dz = so.pos.z - z;
             double distance = dx * dx + dz * dz;
+            double size = so.size;
 
-            if (distance >= so.size * so.size)
+            if (distance >= size * size)
                 continue;
 
-            float factor = (float)(Math.sqrt(distance) / so.size);
+            float factor = (float) (Math.sqrt(distance) / size);
             factor = Math.max(factor * 1.1F - 0.1F, 0.0F);
 
             if (so.levelCurIntensityStage == StormObject.STATE_NORMAL && factor < 0.7F)
@@ -117,11 +126,8 @@ public final class Weather2Utils {
         return 1.0F - combined;
     }
 
-    public static int getSkyDarken(
-            @NotNull Level level,
-            double x, double z
-    ) {
-        @Nullable WeatherManagerServer manager = ServerTickHandler.getWeatherManagerFor(level);
+    public static int getSkyDarken(Level level, double x, double z) {
+        @Nullable WeatherManager manager = getWeatherManager(level);
 
         float rainLevel = 0.0F;
         float thunderLevel = 0.0F;
@@ -138,38 +144,23 @@ public final class Weather2Utils {
         return Math.round((1.0F - d2 * d0 * d1) * 11.0F);
     }
 
-    public static int getSkyDarken(
-            @NotNull Level level,
-            @NotNull BlockPos pos
-    ) {
+    public static int getSkyDarken(Level level, BlockPos pos) {
         return getSkyDarken(level, pos.getX(), pos.getZ());
     }
 
-    public static boolean isDay(
-            @NotNull Level level,
-            double x, double z
-    ) {
+    public static boolean isDay(Level level, double x, double z) {
         return !level.dimensionType().hasFixedTime() && getSkyDarken(level, x, z) < 4;
     }
 
-    public static boolean isDay(
-            @NotNull Level level,
-            @NotNull Vec3 pos
-    ) {
+    public static boolean isDay(Level level, Vec3 pos) {
         return isDay(level, pos.x, pos.z);
     }
 
-    public static boolean isNight(
-            @NotNull Level level,
-            double x, double z
-    ) {
+    public static boolean isNight(Level level, double x, double z) {
         return !level.dimensionType().hasFixedTime() && getSkyDarken(level, x, z) >= 4;
     }
 
-    public static boolean isNight(
-            @NotNull Level level,
-            @NotNull Vec3 pos
-    ) {
+    public static boolean isNight(Level level, Vec3 pos) {
         return isNight(level, pos.x, pos.z);
     }
 }
